@@ -1,0 +1,6 @@
+<h1>Meetings</h1>
+
+<% @meetings.each do |meeting| %>
+  <h2><a href="/meetings/<%= meeting["id"] %>"><%= meeting["date"] %></a></h2>
+  <br>
+<% end %>
