@@ -1,6 +1,10 @@
 class MeetingsController < ApplicationController
+
   def index
-    @meetings = Unirest.get("localhost:3000/api/v2/meetings.json").body
+    @meetings = []
+
+  Unirest.get("#{ ENV["API_HOST"] }/api/v1/meetings.json").body.each do |meeting_hash|
+    @meeting << Meeting.new(meeting_hash)
   end
 
   def new
@@ -9,7 +13,7 @@ class MeetingsController < ApplicationController
 
   def create
     meeting = Unirest.post(
-                            "localhost:3000/api/v2/meetings.json?date=#{params[:time]},
+                            "#{ ENV["API_HOST"] }/api/v2/meetings.json?date=#{params[:time]},
                             headers: {
                                       "Accept" => "application/json"
                                       }
@@ -21,6 +25,10 @@ class MeetingsController < ApplicationController
 
   def show
     @meeting = Unirest.get("localhost:3000/api/v2/meetings/#{params[:id]}.json").body
+  end
+
+  def edit
+   @meeting = Meeting.find(params[:id])
   end
 
   def update

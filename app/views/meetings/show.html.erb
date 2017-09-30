@@ -2,3 +2,15 @@
 
 <h1><%= @meeting["date"] %></h1>
 
+  def show
+    @meeting = Meeting.new(Unirest.get("#{ ENV["API_HOST"] }/api/v1/meetings/#{params[:id]}.json").body)
+  end
+
+  def edit
+    @meeting = Unirest.get("#{ ENV["API_HOST"] }/api/v1/meetings/#{params[:id]}.json").body)
+  end
+
+<%= link_to "edit", "/meetings/#{@meeting.id}/edit" %>
+<%= link_to "delete", "/meetings/#{@employee.id}", method: :delete %>
+
+
